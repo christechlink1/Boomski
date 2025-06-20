@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - Boomski</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="admin-nav">
+    <h1>Boomski ✈ Admin</h1>
+    <a href="index.html">Logout</a>
+  </nav>
+
+  <section class="dashboard-container">
+    <div class="filter-box">
+      <input type="text" placeholder="Search by Name or Ticket Code..." />
+      <select>
+        <option>All Flights</option>
+        <option>Confirmed</option>
+        <option>Cancelled</option>
+      </select>
+    </div>
+
+    <div class="chart-box">
+      <h3>📊 Bookings Overview</h3>
+      <canvas id="bookingChart"></canvas>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th><th>Ticket</th><th>Flight</th><th>Status</th><th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td><td>TK123456</td><td>Accra → London</td><td>Confirmed</td><td>2025-06-22</td>
+        </tr>
+        <tr>
+          <td>Jane Smith</td><td>TK999999</td><td>NYC → Paris</td><td>Cancelled</td><td>2025-06-20</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    const ctx = document.getElementById('bookingChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['June 18', 'June 19', 'June 20', 'June 21'],
+        datasets: [{
+          label: 'Daily Bookings',
+          data: [5, 12, 8, 15],
+          backgroundColor: '#007bff'
+        }]
+      }
+    });
+  </script>
+</body>
+</html>

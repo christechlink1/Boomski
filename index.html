@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flight Booking</title>
+  <style>
+    /* === General Styles === */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("uploads/index.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    /* === Transparent Floating Nav === */
+    nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 15px 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+
+    .logo {
+      color: #fff;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logo-main {
+  font-size: 30px;
+}
+
+.logo-sub {
+  font-size: 15px;
+}
+
+    .nav-links li a:hover {
+      color: #add8ff;
+    }
+
+    /* === Hero Section === */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 150px;
+      text-align: center;
+      min-height: 90vh;
+    }
+
+    .airplane-img {
+  width: 500px;
+  max-width: 100%;
+  transition: transform 0.4s ease-in-out;
+  display: block;
+  margin: 50px auto;
+  cursor: pointer;
+}
+
+.airplane-img:hover {
+  transform: rotate(-6deg) translateX(-25px) scale(1.05);
+}
+
+
+    .overlay-text h1 {
+      color: #fff;
+      font-size: 2.8rem;
+      margin-top: 30px;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    .overlay-text p {
+      color: #f0f8ff;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    /* === Floating Animation === */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* === Footer === */
+    footer {
+      background: rgba(0, 0, 50, 0.5);
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    footer p {
+      margin: 5px;
+      color: #e0e0e0;
+    }
+
+    footer a {
+      color: #80d4ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 600px) {
+      .overlay-text h1 {
+        font-size: 2rem;
+      }
+
+      .overlay-text p {
+        font-size: 1rem;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+    }
+	.nav-links li {
+  list-style: none;
+}
+
+.nav-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #003366;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+}
+.nav-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+nav {
+  transition: box-shadow 0.3s ease;
+}
+
+nav.nav-scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+}
+.booking-section {
+  background: rgba(255, 255, 255, 0.95);
+  color: #003366;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px 60px;
+  border-radius: 25px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.booking-section h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+.booking-form button {
+  grid-column: span 2;
+  justify-self: center;
+}
+
+.booking-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.booking-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.book-btn {
+  padding: 12px 30px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #0056b3;
+}
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.booking-form select,
+.booking-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.book-btn {
+  padding: 12px 25px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.book-btn:hover {
+  background: #0056b3;
+  transform: scale(1.03);
+}
+
+/* Fake results style */
+.results {
+  margin-top: 30px;
+  text-align: left;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  display: none;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.filters {
+  background: #ffffff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.filter-row input,
+.filter-row select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.promo-section {
+  background: #ffffff;
+  padding: 40px;
+  margin: 50px auto;
+  max-width: 1000px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.1);
+  line-height: 1.8;
+}
+
+.promo-section h2, .promo-section h3 {
+  color: #004080;
+  margin-bottom: 15px;
+}
+
+.promo-section .highlight {
+  background-color: #e7f3ff;
+  border-left: 6px solid #007bff;
+  padding: 12px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.feature-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 20px 0;
+}
+
+.feature-list li {
+  margin-bottom: 10px;
+  background: #f9fcff;
+  padding: 10px 15px;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f2f9ff;
+  color: #333;
+  padding: 20px;
+}
+.coupon-box {
+  margin-top: 30px;
+  padding: 20px;
+  background: #e7f3ff;
+  border-radius: 12px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.1);
+}
+
+.coupon-box input {
+  width: 60%;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+}
+
+.coupon-box button {
+  padding: 10px 18px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.coupon-message {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-content h2 {
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-content ul li {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+  </style>
+</head>
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+  <span class="logo-main">Boomski Airline</span><br />
+  <span class="logo-sub">Flight Booking</span>
+</div>
+    <ul class="nav-links">
+  <li><a class="nav-btn" href="index.html">Home</a></li>
+  <li><a class="nav-btn" href="check-ticket.html">Flights</a></li>
+  <li><a class="nav-btn" href="#destinations">Destination</a></li>
+  <li><a class="nav-btn" href="login.html">Login</a></li>
+  <li><a class="nav-btn" href="register.html">Register</a></li>
+  <li><a class="nav-btn active" href="admin-login.html">Admin Login</a></li>
+</ul>
+
+
+    </nav>
+  </header>
+  <main class="hero">
+	<img src="uploads/Airplane.png" alt="Plane" class="airplane-img" />
+    <div class="overlay-text">
+      <h1>Book Flights Worldwide</h1>
+      <p>Real-time search, secure booking, and travel made easy!</p>
+    </div>
+  </main>
+<section class="booking-section">
+  <h2>Book Your Flight</h2>
+  <form class="booking-form" id="flightForm">
+    <div class="form-group">
+      <label>From:</label>
+      <input type="text" placeholder="City or Airport" name="from" required />
+    </div>
+    <div class="form-group">
+      <label>To:</label>
+      <input type="text" placeholder="Destination" name="to" required />
+    </div>
+    <div class="form-group">
+      <label>Departure:</label>
+      <input type="date" name="departure" required />
+    </div>
+    <div class="form-group">
+      <label>Return:</label>
+      <input type="date" name="return" />
+    </div>
+    <div class="form-group">
+      <label>Passengers:</label>
+      <select name="passengers">
+        <option value="1">1 Adult</option>
+        <option value="2">2 Adults</option>
+        <option value="3">3 Adults</option>
+        <option value="4">4+</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Cabin Class:</label>
+      <select name="cabin">
+        <option value="Economy">Economy</option>
+        <option value="Business">Business</option>
+        <option value="First">First Class</option>
+      </select>
+    </div>
+    <div class="form-group full-width">
+      <button type="submit" class="book-btn"> Search Flights</button>
+    </div>
+  </form>
+
+  <div id="results" class="results"></div>
+</section>
+<div class="filters" id="filters" style="display: none;">
+  <h4> Filter & Sort</h4>
+  <div class="filter-row">
+    <input type="text" id="filter-airline" placeholder="Filter by Airline (e.g., A1)" />
+    <input type="number" id="min-price" placeholder="Min Price" />
+    <input type="number" id="max-price" placeholder="Max Price" />
+
+    <select id="sort-select">
+      <option value="">Sort By</option>
+      <option value="time">Departure Time</option>
+      <option value="price">Price</option>
+    </select>
+  </div>
+</div>
+<section class="promo-section">
+  <h2>Compare and Book Cheap Flights from 1000+ Airlines</h2>
+  <p class="highlight">Cheap flight bookings for you are right here — use this coupon code <strong>“BOOMS”</strong> and get <strong>GHS 50 OFF</strong>. Hurry UP!!</p>
+  
+  <p>Well, Boomski is all here at your service.</p>
+  <p>Fly fuss-free as you avail great offers on cheap flight bookings. Take the traveller in you around the world and explore its majesty to the fullest.</p>
+  
+  <h3>✈ Why book flights with Boomski?</h3>
+  <ul class="feature-list">
+    <li>✅ One-stop destination for domestic and international flights</li>
+    <li>✅ Easy availability of tickets at competitive prices</li>
+    <li>✅ Flawless 24*7 customer support</li>
+    <li>✅ Secure bookings and Easy cancellation & refund</li>
+    <li>✅ Get exclusive offers on special destinations regularly</li>
+  </ul>
+
+  <h3>🌍 Book Cheap Flights from Ghana</h3>
+  <p>We bring to the wanderlust of Ghana venue to book cheap flights when one makes a flight booking online. Our online flight booking domain caters to the needs of booking flights and traces down the cheapest flights in the market to international destinations.</p>
+
+  <p>We have everything from cheap flight tickets to budget-friendly airplane tickets. Flight booking to destinations across the world had never been this easier.</p>
+
+  <p><strong>So, make the most of your vacation with Boomski and experience the extraordinary with online flight booking now.</strong></p>
+</section>
+<div class="coupon-box">
+  <label for="coupon">Enter Promo Code:</label>
+  <input type="text" id="coupon" placeholder="e.g. BOOMS" />
+  <button onclick="validateCoupon()">Check Coupon</button>
+  <p id="coupon-message" class="coupon-message"></p>
+</div>
+<div id="destinationModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Popular Destinations</h2>
+    <ul>
+      <li>New York</li>
+      <li>London</li>
+      <li>Paris</li>
+      <li>Tokyo</li>
+      <li>Dubai</li>
+      <li>Singapore</li>
+      <li>Cape Town</li>
+      <li>Rome</li>
+      <li>Sydney</li>
+      <li>Bangkok</li>
+    </ul>
+  </div>
+</div>
+</section>
+  <footer>
+    <p>© 2025 Boomski Flight Booking Inc. All rights reserved.</p>
+    <p>
+      <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a>
+    </p>
+  </footer>
+</body>
+</html>
+<script>
+  window.addEventListener("scroll", function () {
+    const nav = document.querySelector("nav");
+    if (window.scrollY > 10) {
+      nav.classList.add("nav-scrolled");
+    } else {
+      nav.classList.remove("nav-scrolled");
+    }
+  });
+  const flights = [
+    { airline: 'A1', time: '08:00', price: 350 },
+    { airline: 'B2', time: '12:30', price: 420 },
+    { airline: 'C3', time: '19:45', price: 310 },
+    { airline: 'D4', time: '16:20', price: 390 }
+  ];
+
+  document.getElementById('flightForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    
+    document.getElementById('filters').style.display = 'block';
+    renderFlights(flights);
+  });
+
+  function renderFlights(flightsToShow) {
+    const results = document.getElementById('results');
+    results.style.display = 'block';
+    results.innerHTML = `
+      <h3>✈️ Available Flights</h3>
+      <ul>
+        ${flightsToShow.map(f => `
+          <li>
+            Airline: ${f.airline} |
+            Time: ${f.time} |
+            Price: $${f.price}
+          </li>
+        `).join('')}
+      </ul>
+    `;
+  }
+function validateCoupon() {
+  const code = document.getElementById("coupon").value.trim().toUpperCase();
+  const msg = document.getElementById("coupon-message");
+
+  if (code === "BOOMS") {
+    msg.textContent = "✅ Coupon applied! You get GHS 50 OFF.";
+    msg.style.color = "green";
+  } else {
+    msg.textContent = "❌ Invalid coupon code.";
+    msg.style.color = "red";
+  }
+}
+
+  // Filter and sort logic
+  document.getElementById('filters').addEventListener('input', () => {
+    const airline = document.getElementById('filter-airline').value.toUpperCase();
+    const minPrice = parseInt(document.getElementById('min-price').value);
+    const maxPrice = parseInt(document.getElementById('max-price').value);
+    const sort = document.getElementById('sort-select').value;
+
+    let filtered = flights.filter(f => {
+      const matchAirline = airline === '' || f.airline.toUpperCase().includes(airline);
+      const matchMin = isNaN(minPrice) || f.price >= minPrice;
+      const matchMax = isNaN(maxPrice) || f.price <= maxPrice;
+      return matchAirline && matchMin && matchMax;
+    });
+
+    if (sort === 'time') {
+      filtered.sort((a, b) => a.time.localeCompare(b.time));
+    } else if (sort === 'price') {
+      filtered.sort((a, b) => a.price - b.price);
+    }
+
+    renderFlights(filtered);
+  });
+
+document.querySelector('.nav-links .nav-btn[href="#destinations"]').addEventListener('click', function (e) {
+  e.preventDefault();
+  document.getElementById('destinationModal').style.display = 'flex';
+});
+
+document.querySelector('.modal .close-btn').addEventListener('click', function () {
+  document.getElementById('destinationModal').style.display = 'none';
+});
+
+window.addEventListener('click', function (e) {
+  const modal = document.getElementById('destinationModal');
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+</script>

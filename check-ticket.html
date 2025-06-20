@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Ticket - Boomski Air</title>
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="iconify" data-icon="mdi:airplane"></span> Boomski 🛩
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-card"><span class="iconify" data-icon="mdi:home"></span> Home</a></li>
+      <li><button class="nav-card book-btn" onclick="openBookingModal()"><span class="iconify" data-icon="mdi:airplane-takeoff"></span> Book Flight</button></li>
+      <li><button class="nav-card book-btn" onclick="openCheckTicketModal()"><span class="iconify" data-icon="mdi:magnify"></span> Check Ticket</button></li>
+    </ul>
+  </nav>
+
+<!-- Modal for Booking Form -->
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeBookingModal()"><span class="iconify" data-icon="mdi:close-circle"></span></span>
+    <h3><span class="iconify" data-icon="mdi:airplane"></span> Book Your Flight</h3>
+    <form id="bookingForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" placeholder="Enter your address" required />
+
+      <label for="hotel">Hotel:</label>
+      <input type="text" id="hotel" name="hotel" placeholder="Enter hotel name (optional)" />
+
+      <label for="from">From:</label>
+      <input type="text" id="from" name="from" placeholder="Enter departure city" required />
+
+      <label for="to">To:</label>
+      <input type="text" id="to" name="to" placeholder="Enter destination city" required />
+
+      <label for="departure">Departure Date:</label>
+      <input type="date" id="departure" name="departure" required />
+
+      <label for="return">Return Date:</label>
+      <input type="date" id="return" name="return" />
+      <label for="passengers">Passengers:</label>
+      <select id="passengers" name="passengers">
+        <option value="1">1 Adult</option>
+        <option value="2">2 Adults</option>
+        <option value="3">3 Adults</option>
+        <option value="4">4 Adults</option>
+      </select>
+
+      <button type="submit"><span class="iconify" data-icon="mdi:check-circle"></span> Submit Booking</button>
+    </form>
+  </div>
+</div>
+
+  <!-- Modal for Check Ticket -->
+  <div id="checkTicketModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckTicketModal()"><span class="iconify" data-icon="mdi:close-circle"></span></span>
+      <h3><span class="iconify" data-icon="mdi:ticket"></span> Check Your Ticket</h3>
+      <form id="ticketForm">
+        <input type="text" id="ticketInput" placeholder="Enter Ticket Code (e.g. TK123456)" required />
+        <button type="submit"><span class="iconify" data-icon="mdi:magnify"></span> Check Ticket</button>
+        <button type="button" onclick="downloadTicketPDF()"><span class="iconify" data-icon="mdi:download"></span> Download Ticket</button>
+      </form>
+      <div id="ticketResult" class="ticket-result"></div>
+    </div>
+  </div>
+
+  <section class="deals-section">
+  <h2>Affordable Flight Deals</h2>
+  <p class="deal-intro">
+    Discover the best flight deals and offers to all your favorite destinations with Boomski. Whether it's a quick weekend escape, a spontaneous holiday, or a luxurious getaway, our affordable flight deals have you covered. Hurry, book today!
+  </p>
+
+  <div class="deals-grid" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 10135')">
+    <!-- Repeatable deal card -->
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 2221')">
+      <h3>Accra → Kumasi</h3>
+      <p>Starts @ <strong>GHS 2221</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 2221')">
+      <h3>Kumasi → Accra</h3>
+      <p>Starts @ <strong>GHS 2221</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 4776')">
+      <h3>Accra → Lagos</h3>
+      <p>Starts @ <strong>GHS 4776</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 6822')">
+      <h3>Accra → Johannesburg</h3>
+      <p>Starts @ <strong>GHS 6822</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 8945')">
+      <h3>Accra → Amsterdam</h3>
+      <p>Starts @ <strong>GHS 8945</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 9540')">
+      <h3>Accra → Rome</h3>
+      <p>Starts @ <strong>GHS 9540</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 9795')">
+      <h3>Accra → London</h3>
+      <p>Starts @ <strong>GHS 9795</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 10135')">
+      <h3>Accra → Dubai</h3>
+      <p>Starts @ <strong>GHS 10135</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 11136')">
+      <h3>Accra → Doha</h3>
+      <p>Starts @ <strong>GHS 11136</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 11258')">
+      <h3>Accra → London</h3>
+      <p>Starts @ <strong>GHS 11258</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 11455')">
+      <h3>Accra → Istanbul</h3>
+      <p>Starts @ <strong>GHS 11455</strong></p>
+    </div>
+    <div class="deal-card" onclick="fillBookingForm('Accra', 'Dubai', 'GHS 11561')"> 
+      <h3>Accra → Nairobi</h3>
+      <p>Starts @ <strong>GHS 11561</strong></p>
+    </div>
+ <!-- Extended International Flight Deals -->
+<div class="deal-card" onclick="fillBookingForm('Accra', 'New York', 'GHS 12000')">
+  <h3>Accra → New York</h3>
+  <p>Starts @ <strong>GHS 12000</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Toronto', 'GHS 11850')">
+  <h3>Accra → Toronto</h3>
+  <p>Starts @ <strong>GHS 11850</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Paris', 'GHS 11300')">
+  <h3>Accra → Paris</h3>
+  <p>Starts @ <strong>GHS 11300</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Berlin', 'GHS 11600')">
+  <h3>Accra → Berlin</h3>
+  <p>Starts @ <strong>GHS 11600</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Madrid', 'GHS 10950')">
+  <h3>Accra → Madrid</h3>
+  <p>Starts @ <strong>GHS 10950</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Beijing', 'GHS 12345')">
+  <h3>Accra → Beijing</h3>
+  <p>Starts @ <strong>GHS 12345</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Tokyo', 'GHS 12999')">
+  <h3>Accra → Tokyo</h3>
+  <p>Starts @ <strong>GHS 12999</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Bangkok', 'GHS 11220')">
+  <h3>Accra → Bangkok</h3>
+  <p>Starts @ <strong>GHS 11220</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Sydney', 'GHS 13500')">
+  <h3>Accra → Sydney</h3>
+  <p>Starts @ <strong>GHS 13500</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Cape Town', 'GHS 10800')">
+  <h3>Accra → Cape Town</h3>
+  <p>Starts @ <strong>GHS 10800</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Seoul', 'GHS 12550')">
+  <h3>Accra → Seoul</h3>
+  <p>Starts @ <strong>GHS 12550</strong></p>
+</div>
+
+<div class="deal-card" onclick="fillBookingForm('Accra', 'Cairo', 'GHS 9800')">
+  <h3>Accra → Cairo</h3>
+  <p>Starts @ <strong>GHS 9800</strong></p>
+</div>
+ </div>
+
+
+  <p class="disclaimer">
+    *Fares displayed above are inclusive of taxes & fees, based on historical data, are subject to change and cannot be guaranteed at the time of booking. See all booking terms and conditions.
+  </p>
+</section>
+<!-- Booking Deal Modal -->
+<div id="dealModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Confirm Booking</h3>
+    <p><strong>From:</strong> <span id="modal-from"></span></p>
+    <p><strong>To:</strong> <span id="modal-to"></span></p>
+    <p><strong>Estimated Price:</strong> <span id="modal-price"></span></p>
+    <button onclick="confirmDeal()">Yes, Book This Deal</button>
+  </div>
+</div>
+
+  <!-- Modal for Booking Form -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeBookingModal()"><span class="iconify" data-icon="mdi:close-circle"></span></span>
+      <h3><span class="iconify" data-icon="mdi:airplane"></span> Book Your Flight</h3>
+      <form id="bookingForm">
+        <label for="from">From:</label>
+        <input type="text" id="from" name="from" placeholder="Enter departure city" required />
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to" placeholder="Enter destination city" required />
+        <label for="departure">Departure Date:</label>
+        <input type="date" id="departure" name="departure" required />
+        <label for="return">Return Date:</label>
+        <input type="date" id="return" name="return" />
+        <label for="passengers">Passengers:</label>
+        <select id="passengers" name="passengers">
+          <option value="1">1 Adult</option>
+          <option value="2">2 Adults</option>
+          <option value="3">3 Adults</option>
+          <option value="4">4 Adults</option>
+        </select>
+        <button type="submit"><span class="iconify" data-icon="mdi:check-circle"></span> Submit Booking</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  // Open Check Ticket Modal
+  function openCheckTicketModal() {
+    document.getElementById('checkTicketModal').style.display = 'block';
+  }
+
+  // Close Check Ticket Modal
+  function closeCheckTicketModal() {
+    document.getElementById('checkTicketModal').style.display = 'none';
+  }
+
+  // Handle Ticket Form Submission
+  document.getElementById('ticketForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const code = document.getElementById('ticketInput').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('ticketResult');
+
+    const fakeTickets = {
+      'TK123456': {
+        name: 'Beatrice Kumi',
+        flight: 'Boomski 221',
+        from: 'Accra',
+        to: 'London',
+        date: '2025-06-22',
+        status: 'Confirmed ✅'
+      },
+      'TK999999': {
+        name: 'Jane Smith',
+        flight: 'Boomski 112',
+        from: 'New York',
+        to: 'Paris',
+        date: '2025-06-20',
+        status: 'Cancelled ❌'
+      }
+    };
+
+    if (fakeTickets[code]) {
+      const t = fakeTickets[code];
+      resultDiv.innerHTML = `
+        <div class="card">
+          <h3>Ticket Found</h3>
+          <p><strong>Name:</strong> ${t.name}</p>
+          <p><strong>Flight:</strong> ${t.flight}</p>
+          <p><strong>From:</strong> ${t.from} → <strong>To:</strong> ${t.to}</p>
+          <p><strong>Date:</strong> ${t.date}</p>
+          <p><strong>Status:</strong> ${t.status}</p>
+        </div>
+      `;
+    } else {
+      resultDiv.innerHTML = `<div class="card error">❌ Ticket not found. Please check the code.</div>`;
+    }
+  });
+
+  // Download Ticket as PDF
+  async function downloadTicketPDF() {
+    const code = document.getElementById('ticketInput').value.trim().toUpperCase();
+    const fakeTickets = {
+      'TK123456': {
+        name: 'Beatrice Kumi',
+        flight: 'Boomski 221',
+        from: 'Accra',
+        to: 'London',
+        date: '2025-06-22',
+        status: 'Confirmed ✅'
+      },
+      'TK999999': {
+        name: 'Jane Smith',
+        flight: 'Boomski 112',
+        from: 'New York',
+        to: 'Paris',
+        date: '2025-06-20',
+        status: 'Cancelled ❌'
+      }
+    };
+
+    if (fakeTickets[code]) {
+      const t = fakeTickets[code];
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFontSize(16);
+      doc.text('Boomski Airline Ticket', 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Ticket Code: ${code}`, 20, 40);
+      doc.text(`Name: ${t.name}`, 20, 50);
+      doc.text(`Flight: ${t.flight}`, 20, 60);
+      doc.text(`From: ${t.from} → To: ${t.to}`, 20, 70);
+      doc.text(`Date: ${t.date}`, 20, 80);
+      doc.text(`Status: ${t.status}`, 20, 90);
+
+      doc.save(`${code}_ticket.pdf`);
+    } else {
+      const resultDiv = document.getElementById('ticketResult');
+      resultDiv.innerHTML = `<div class="card error">❌ Ticket not found. Please check the code.</div>`;
+    }
+  }
+
+  let tempFrom = '', tempTo = '', tempPrice = '';
+
+  function fillBookingForm(from, to, price = '') {
+    tempFrom = from;
+    tempTo = to;
+    tempPrice = price;
+
+    document.getElementById('modal-from').innerText = from;
+    document.getElementById('modal-to').innerText = to;
+    document.getElementById('modal-price').innerText = price || 'GHS --';
+    
+    document.getElementById('dealModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('dealModal').style.display = 'none';
+  }
+
+  function confirmDeal() {
+    document.getElementById('from-input').value = tempFrom;
+    document.getElementById('to-input').value = tempTo;
+
+    const form = document.getElementById('booking-form');
+    if (form) {
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    closeModal();
+  }
+
+  // Optional: Close modal on outside click
+  window.onclick = function(event) {
+    const modal = document.getElementById('dealModal');
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
+
+  // Open Booking Modal
+  function openBookingModal() {
+    document.getElementById('bookingModal').style.display = 'block';
+  }
+
+  // Close Booking Modal
+  function closeBookingModal() {
+    document.getElementById('bookingModal').style.display = 'none';
+  }
+
+  // Optional: Close modal on outside click
+  window.onclick = function(event) {
+    const modal = document.getElementById('bookingModal');
+    if (event.target == modal) {
+      closeBookingModal();
+    }
+  };
+
+  // Handle Booking Form Submission
+  document.getElementById('bookingForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const hotel = document.getElementById('hotel').value || 'N/A';
+    const from = document.getElementById('from').value;
+    const to = document.getElementById('to').value;
+    const departure = document.getElementById('departure').value;
+    const returnDate = document.getElementById('return').value || 'N/A';
+    const passengers = document.getElementById('passengers').value;
+
+    alert(`Booking Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nHotel: ${hotel}\nFrom: ${from}\nTo: ${to}\nDeparture: ${departure}\nReturn: ${returnDate}\nPassengers: ${passengers}`);
+    closeBookingModal();
+  });
+</script>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #e9f4ff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar {
+    background: rgba(0, 66, 132, 0.9);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    position: sticky;
+    top: 0;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+  }
+
+  .nav-card {
+    background: white;
+    color: #004080;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .nav-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 66, 132, 0.3);
+  }
+
+  .nav-card.active {
+    background: #007bff;
+    color: white;
+  }
+
+  .book-btn {
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .deals-section {
+  padding: 60px 20px;
+  background: #f7fbff;
+  text-align: center;
+}
+
+.deals-section h2 {
+  font-size: 2rem;
+  color: #004080;
+  margin-bottom: 10px;
+}
+
+.deal-intro {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.deal-card {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 8px 24px rgba(0, 123, 255, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
+}
+
+.deal-card h3 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.deal-card p {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.disclaimer {
+  margin-top: 30px;
+  font-size: 0.85rem;
+  color: #888;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: royalblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: navy;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+  .modal-content label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+  }
+
+  .modal-content input, .modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .modal-content button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .modal-content button:hover {
+    background-color: navy;
+  }
+
+  .close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</html>

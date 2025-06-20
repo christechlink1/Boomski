@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Ticket - Boomski</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ticket-container">
+    <div id="ticket-summary">
+      <h2>🎫 Ticket Confirmation</h2>
+      <p><strong>Name:</strong> John Doe</p>
+      <p><strong>Ticket Code:</strong> TK123456</p>
+      <p><strong>From:</strong> Accra → <strong>To:</strong> London</p>
+      <p><strong>Flight Date:</strong> 2025-06-22</p>
+      <p><strong>Status:</strong> Confirmed ✅</p>
+    </div>
+
+    <button onclick="downloadTicket()">📥 Download Ticket (PDF)</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadTicket() {
+      const element = document.getElementById('ticket-summary');
+      html2pdf().from(element).save('Boomski_Ticket.pdf');
+    }
+  </script>
+</body>
+</html>

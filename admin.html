@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url("uploads/index.png") no-repeat center center fixed;
+      background-size: cover;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    h2 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background: #007bff;
+      color: #fff;
+    }
+
+    td {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="home-icon">
+    <span class="iconify" data-icon="mdi:home"></span>
+  </a>
+  <h2>Booking Management (Admin)</h2>
+  <table>
+    <thead>
+      <tr><th>User</th><th>Flight</th><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody id="adminTable"></tbody>
+  </table>
+  <script>
+    const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+    const table = document.getElementById("adminTable");
+    bookings.forEach(b => {
+      table.innerHTML += `<tr><td>${b.user}</td><td>${b.from} → ${b.to}</td><td>${b.date}</td><td>${b.status}</td></tr>`;
+    });
+  </script>
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+</body>
+</html>

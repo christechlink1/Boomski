@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url("uploads/index.png") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .branding {
+      font-size: 22px;
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .google-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .google-icon img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .register-link {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .register-link:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      margin-top: 10px;
+      text-align: center;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="home-icon">
+    <span class="iconify" data-icon="mdi:home"></span>
+  </a>
+  <div class="container">
+    <div class="branding">Boomski Airline</div>
+    <h2>Login</h2>
+    <form id="loginForm" action="/api/login" method="POST">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="google-icon">
+      <a href="/api/google-login">
+        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Icon" />
+      </a>
+    </div>
+    <a href="register.html" class="register-link">Do you want to register?</a>
+    <div id="result" class="message"></div>
+  </div>
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').textContent = data.message || 'Login successful!';
+      })
+      .catch(error => {
+        document.getElementById('result').textContent = 'Login failed!';
+      });
+    });
+  </script>
+</body>
+</html>
